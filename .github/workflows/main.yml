@@ -3,7 +3,7 @@ name: Deploy Laravel Project to cPanel
 on:
   push:
     branches:
-      - main   # main ব্রাঞ্চে push করলে ট্রিগার হবে
+      - main   
 
 jobs:
   deploy:
@@ -22,11 +22,11 @@ jobs:
     - name: Install Composer Dependencies
       run: composer install --no-dev --optimize-autoloader
 
-    - name: Upload files to cPanel via FTP
+    - name: Deploy to cPanel via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
+        server: ftp.edunika.com
+        username: cicd@cicd.edunika.com
         password: ${{ secrets.FTP_PASSWORD }}
         protocol: ftp
         port: 21
@@ -39,16 +39,3 @@ jobs:
           **/tests/**
           **/storage/logs/**
           **/.env
-
-    - name: Run Artisan Commands on Server (via SSH)
-      uses: appleboy/ssh-action@v1.0.0
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USERNAME }}
-        password: ${{ secrets.SSH_PASSWORD }}
-        script: |
-          cd /home/edunika1/cicd.edunika.com
-          php artisan migrate --force
-          php artisan config:cache
-          php artisan route:cache
-          php artisan view:cache
