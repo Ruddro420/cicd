@@ -3,7 +3,7 @@ name: Deploy Laravel Project to cPanel
 on:
   push:
     branches:
-      - main   
+      - main
 
 jobs:
   deploy:
@@ -27,7 +27,7 @@ jobs:
       with:
         server: ftp.edunika.com
         username: cicd@cicd.edunika.com
-        password: ${{ secrets.FTP_PASSWORD }}
+        password: (0lN5)FpYScY89tV   # ⚠️ এখানে আপনার আসল পাসওয়ার্ড দেয়া হলো
         protocol: ftp
         port: 21
         local-dir: ./
